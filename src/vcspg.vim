@@ -34,16 +34,31 @@ function! GetSpecialColors() abort
   " A lot of interesting things in *highlight-default*
 endfunction
 
+function! GetLastLine() abort
+  return line("$")
+endfunction
+
+function! GetLastCol(line) abort
+  call cursor(a:line, 1)
+  return col("$")
+endfunction
+
 " get color values of all words in the file + some more
 function! GetColorValues() abort
-  call cursor(1, 1)
+  let l:lastline = GetLastLine()
 
-  let l:index = 0
+  let l:currentline = 1
+
   let l:values = []
-  while l:index < 26 " FIXME
-    let l:values += [GetColorValue()]
-    normal! w
-    let l:index += 1
+  while l:currentline <= l:lastline
+    let l:lastcol = GetLastCol(l:currentline)
+    let l:currentcol = 1
+    while l:currentcol <= l:lastcol
+      call cursor(l:currentline, l:currentcol)
+      let l:values += [GetColorValue()]
+      let l:currentcol += 1
+    endwhile
+    let l:currentline += 1
   endwhile
 
   " add cursor colors as well
