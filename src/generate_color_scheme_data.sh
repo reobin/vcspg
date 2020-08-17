@@ -9,7 +9,7 @@ name="$2"
 mkdir -p ~/.vim/pack/$name/start/$name
 
 git clone --depth 1 \
-  https://github.com/$owner_name/$name.git \
+  https://github.com/$owner_name/$name \
   ~/.vim/pack/$name/start/$name
 
 cat set_termguicolors.vim > ~/.vimrc
