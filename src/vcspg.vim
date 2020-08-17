@@ -10,25 +10,25 @@ function! GetColorValue() abort
   if l:color == ""
     let l:color = synIDattr(hlID("Normal"), "fg")
   endif
-  return {l:name: l:color}
+  return {"group": l:name, "color": l:color}
 endfunction
 
 function! GetCursorColors() abort
   " there are also lCursor and CursorIM, but i don't know when they are used
-  return [ {"Cursor": synIDattr(hlID("Cursor"), "bg")}
-    \ , {"CursorLine": synIDattr(hlID("CursorLine"), "bg")}
-    \ , {"CursorLineNr": synIDattr(hlID("CursorLineNr"), "fg")}
-    \ , {"CursorColumn": synIDattr(hlID("CursorColumn"), "bg")}
-    \ , {"MatchParen": synIDattr(hlID("MatchParen"), "bg")}
+  return [ {"group": "Cursor", "color": synIDattr(hlID("Cursor"), "bg")}
+    \ , {"group": "CursorLine", "color": synIDattr(hlID("CursorLine"), "bg")}
+    \ , {"group": "CursorLineNr", "color": synIDattr(hlID("CursorLineNr"), "fg")}
+    \ , {"group": "CursorColumn", "color": synIDattr(hlID("CursorColumn"), "bg")}
+    \ , {"group": "MatchParen", "color": synIDattr(hlID("MatchParen"), "bg")}
     \ ]
 endfunction
 
 function! GetSpecialColors() abort
-  return [ {"LineNr": synIDattr(hlID("LineNr"), "fg")}
-    \ , {"VertSplitFg": synIDattr(hlID("VertSplit"), "fg")}
-    \ , {"VertSplitBg": synIDattr(hlID("VertSplit"), "bg")}
-    \ , {"FoldedFg": synIDattr(hlID("Folded"), "fg")}
-    \ , {"FoldedBg": synIDattr(hlID("Folded"), "bg")}
+  return [ {"group": "LineNr", "color": synIDattr(hlID("LineNr"), "fg")}
+    \ , {"group": "VertSplitFg", "color": synIDattr(hlID("VertSplit"), "fg")}
+    \ , {"group": "VertSplitBg", "color": synIDattr(hlID("VertSplit"), "bg")}
+    \ , {"group": "FoldedFg", "color": synIDattr(hlID("Folded"), "fg")}
+    \ , {"group": "FoldedBg", "color": synIDattr(hlID("Folded"), "bg")}
     \ ]
   " Maybe also Directory, DiffStuff, IncSearch, Search, Pmenu, PmenuSel
   " A lot of interesting things in *highlight-default*
@@ -65,7 +65,7 @@ function! GetColorValues() abort
   let l:values += GetCursorColors()
 
   " add background color
-  let l:values += [{"Background": synIDattr(hlID("Normal"), "bg")}]
+  let l:values += [{"group": "Background", "color": synIDattr(hlID("Normal"), "bg")}]
 
   " add other important colors
   let l:values += GetSpecialColors()
@@ -81,6 +81,6 @@ function! GetColorValues() abort
   return l:values
 endfunction
 
-function WriteColorValues() abort
-  call writefile([json_encode(GetColorValues())], "data.json")
+function WriteColorValues(filename) abort
+  call writefile([json_encode(GetColorValues())], a:filename)
 endfunction
