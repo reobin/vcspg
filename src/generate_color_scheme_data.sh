@@ -22,4 +22,4 @@ echo "colorscheme $color_scheme_name" >> ~/.vimrc
 
 cat vcspg.vim >> ~/.vimrc
 
-vim -c ":call WriteColorValues()" code_sample.js -c ":q"
+vim -c ":call WriteColorValues(\"${owner_name}_$name.json\")" code_sample.js -c ":q"
