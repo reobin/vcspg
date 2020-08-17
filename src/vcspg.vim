@@ -84,6 +84,19 @@ function! GetColorValues() abort
   return l:values
 endfunction
 
-function WriteColorValues(filename) abort
-  call writefile([json_encode(GetColorValues())], a:filename)
+function WriteColorValues() abort
+  let l:defaultbackgroundvalue = synIDattr(hlID("Normal"), "bg")
+  call writefile([json_encode(GetColorValues())], "default.json")
+
+  set background=light
+  let l:lightbackgroundvalue = synIDattr(hlID("Normal"), "bg")
+  if l:defaultbackgroundvalue != l:lightbackgroundvalue
+    call writefile([json_encode(GetColorValues())], "light.json")
+  endif
+
+  set background=dark
+  let l:darkbackgroundvalue = synIDattr(hlID("Normal"), "bg")
+  if l:defaultbackgroundvalue != l:darkbackgroundvalue
+    call writefile([json_encode(GetColorValues())], "dark.json")
+  endif
 endfunction
