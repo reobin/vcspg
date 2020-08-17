@@ -14,30 +14,42 @@ function! GetColorValue() abort
 endfunction
 
 function! GetCursorColors() abort
-  " there are also lCursor and CursorIM, but i don't know when they are used
-  return [ {"group": "Cursor", "color": synIDattr(hlID("Cursor"), "bg")}
-    \ , {"group": "CursorLine", "color": synIDattr(hlID("CursorLine"), "bg")}
-    \ , {"group": "CursorLineNr", "color": synIDattr(hlID("CursorLineNr"), "fg")}
-    \ , {"group": "CursorColumn", "color": synIDattr(hlID("CursorColumn"), "bg")}
-    \ , {"group": "MatchParen", "color": synIDattr(hlID("MatchParen"), "bg")}
-    \ ]
+  return [
+        \ {"group": "Cursor", "color": synIDattr(hlID("Cursor"), "bg")}
+        \ , {"group": "CursorLine", "color": synIDattr(hlID("CursorLine"), "bg")}
+        \ , {"group": "CursorLineNr", "color": synIDattr(hlID("CursorLineNr"), "fg")}
+        \ , {"group": "CursorColumn", "color": synIDattr(hlID("CursorColumn"), "bg")}
+        \ , {"group": "MatchParen", "color": synIDattr(hlID("MatchParen"), "bg")}
+        \ ]
+endfunction
+
+function! GetStatusBarColors() abort
+  " insert mode colors could also be fetched using:
+  " :startinsert
+  " get colors
+  " :stopinsert
+  return [
+        \ {"group": "StatusLine", "color": synIDattr(hlID("StatusLine"), "fg")}
+        \ , {"group": "StatusLineBackground", "color": synIDattr(hlID("StatusLine"), "bg")}
+        \ ]
 endfunction
 
 function! GetSpecialColors() abort
-  return [ {"group": "LineNr", "color": synIDattr(hlID("LineNr"), "fg")}
-    \ , {"group": "VertSplitFg", "color": synIDattr(hlID("VertSplit"), "fg")}
-    \ , {"group": "VertSplitBg", "color": synIDattr(hlID("VertSplit"), "bg")}
-    \ , {"group": "FoldedFg", "color": synIDattr(hlID("Folded"), "fg")}
-    \ , {"group": "FoldedBg", "color": synIDattr(hlID("Folded"), "bg")}
-    \ ]
-  " Maybe also Directory, DiffStuff, IncSearch, Search, Pmenu, PmenuSel
-  " A lot of interesting things in *highlight-default*
+  return [
+        \ {"group": "LineNr", "color": synIDattr(hlID("LineNr"), "fg")}
+        \ , {"group": "VertSplitFg", "color": synIDattr(hlID("VertSplit"), "fg")}
+        \ , {"group": "VertSplitBg", "color": synIDattr(hlID("VertSplit"), "bg")}
+        \ , {"group": "FoldedFg", "color": synIDattr(hlID("Folded"), "fg")}
+        \ , {"group": "FoldedBg", "color": synIDattr(hlID("Folded"), "bg")}
+        \ ]
 endfunction
 
+" Get the last line # of the entire file
 function! GetLastLine() abort
   return line("$")
 endfunction
 
+" Get the last column # of the given line
 function! GetLastCol(line) abort
   call cursor(a:line, 1)
   return col("$")
@@ -61,19 +73,10 @@ function! GetColorValues() abort
     let l:currentline += 1
   endwhile
 
-  " add cursor colors as well
   let l:values += GetCursorColors()
-
-  " add background color
+  let l:values += GetStatusBarColors()
   let l:values += [{"group": "Background", "color": synIDattr(hlID("Normal"), "bg")}]
-
-  " add other important colors
   let l:values += GetSpecialColors()
-
-  " Note: most colorschemes have a problem that when you move a cursor on a
-  " brace, the highlight of it and the matching brace are just awful, to the
-  " point where I can't find where the cursor is at all. The colors are
-  " captured as MatchParen, but i don't know how to show them
 
   call sort(l:values)
   call uniq(l:values)
