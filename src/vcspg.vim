@@ -101,8 +101,9 @@ function WriteColorValues(filename) abort
   if l:defaultbackgroundvalue != l:darkbackgroundvalue
     let l:dark = GetColorValues()
   else
-    let l:light = l:default
+    let l:dark = l:default
   endif
 
-  call writefile([json_encode({"light": l:light, "dark": l:dark})], a:filename)
+  let l:data = {"light": l:light, "dark": l:dark}
+  call writefile([json_encode(l:data)], a:filename)
 endfunction
