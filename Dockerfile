@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 LABEL maintainer="Robin Gagnon<contact@reobin.dev>"
 LABEL version="0.1"
-LABEL description="Generator for vim color scheme preview"
+LABEL description="The vim color scheme preview generator"
 
 ENV TERM xterm-256color
 
