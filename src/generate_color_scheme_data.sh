@@ -6,12 +6,12 @@ mkdir -p ~/.vim/pack/$owner_name/$name/start/
 
 git clone --depth 1 \
   https://github.com/$owner_name/$name.git \
-  ~/.vim/pack/$owner_name/start/$name
+  ~/.vim/pack/$name/start/$name
 
 cat set_termguicolors.vim > ~/.vimrc
 
-echo "colorscheme $name\n" >> ~/.vimrc
+echo "colorscheme $name" >> ~/.vimrc
 
-cat get_color_values.vim >> ~/.vimrc
+cat vcspg.vim >> ~/.vimrc
 
-vim -c ':call GetColorValues()' code_sample.js -c ':q'
+vim -c ':call WriteColorValues()' code_sample.js -c ':q'
