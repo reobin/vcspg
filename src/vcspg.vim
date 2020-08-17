@@ -3,7 +3,7 @@
 function! GetColorValue() abort
   let l:synID = synID(line("."), col("."), 1)
   let l:name = synIDattr(l:synID, "name")
-  let l:color = synIDattr(l:synID, "fg")
+  let l:color = synIDattr(synIDtrans(l:synID), "fg")
   if l:name == ""
     let l:name = "Normal"
   endif
@@ -16,20 +16,20 @@ endfunction
 function! GetCursorColors() abort
   " there are also lCursor and CursorIM, but i don't know when they are used
   return [ {"Cursor": synIDattr(hlID("Cursor"), "bg")}
-        \ , {"CursorLine": synIDattr(hlID("CursorLine"), "bg")}
-        \ , {"CursorLineNr": synIDattr(hlID("CursorLineNr"), "fg")}
-        \ , {"CursorColumn": synIDattr(hlID("CursorColumn"), "bg")}
-        \ , {"MatchParen": synIDattr(hlID("MatchParen"), "bg")}
-        \ ]
+    \ , {"CursorLine": synIDattr(hlID("CursorLine"), "bg")}
+    \ , {"CursorLineNr": synIDattr(hlID("CursorLineNr"), "fg")}
+    \ , {"CursorColumn": synIDattr(hlID("CursorColumn"), "bg")}
+    \ , {"MatchParen": synIDattr(hlID("MatchParen"), "bg")}
+    \ ]
 endfunction
 
 function! GetSpecialColors() abort
   return [ {"LineNr": synIDattr(hlID("LineNr"), "fg")}
-        \ , {"VertSplitFg": synIDattr(hlID("VertSplit"), "fg")}
-        \ , {"VertSplitBg": synIDattr(hlID("VertSplit"), "bg")}
-        \ , {"FoldedFg": synIDattr(hlID("Folded"), "fg")}
-        \ , {"FoldedBg": synIDattr(hlID("Folded"), "bg")}
-        \ ]
+    \ , {"VertSplitFg": synIDattr(hlID("VertSplit"), "fg")}
+    \ , {"VertSplitBg": synIDattr(hlID("VertSplit"), "bg")}
+    \ , {"FoldedFg": synIDattr(hlID("Folded"), "fg")}
+    \ , {"FoldedBg": synIDattr(hlID("Folded"), "bg")}
+    \ ]
   " Maybe also Directory, DiffStuff, IncSearch, Search, Pmenu, PmenuSel
   " A lot of interesting things in *highlight-default*
 endfunction
