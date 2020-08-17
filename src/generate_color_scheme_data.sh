@@ -1,8 +1,12 @@
+# vim-polyglot
+mkdir -p ~/.vim/pack/vim-polyglot/start/vim-polyglot/
+git clone https://github.com/sheerun/vim-polyglot ~/.vim/pack/vim-polyglot/start/vim-polyglot
+
 owner_name="$1"
 name="$2"
 
 # creating the vim plugin directory
-mkdir -p ~/.vim/pack/$owner_name/$name/start/
+mkdir -p ~/.vim/pack/$name/start/$name
 
 git clone --depth 1 \
   https://github.com/$owner_name/$name.git \
