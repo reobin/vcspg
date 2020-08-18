@@ -18,18 +18,24 @@ Then, build the docker image
 docker build -t vcspg .
 ```
 
-Once built, run the image in interactive mode.
+Once built, run the image like an executable by giving it 2 parameters.
 
 ```shell
-docker run -it vcspg
+docker run vcspg <github_owner_name> <github_name>
 ```
-
-Once in the linux instance, generate data for any color scheme using its name and GitHub owner name.
 
 Example:
 
 ```shell
-sh generate_color_scheme_data.sh tomasr molokai
+docker run vcspg morhetz gruvbox
 ```
 
-The output data is stored in `data.json`
+There is a third optional parameter which is the name of the color scheme needed for the vim configuration.
+
+Example:
+
+```shell
+docker run vcspg NLKNguyen papercolor-theme PaperColor
+```
+
+This would add the line `colorscheme PaperColor` to the `.vimrc`. By default, the second parameter is used.
